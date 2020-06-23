@@ -1,11 +1,14 @@
-<div>
-
+<div class="display">
+  {{result}}  
 </div>
-<div>
-  {{#each buttons as |numberButton|}} 
-    <button>
-      {{numberButton}}
-    </button>
-  {{/each}}
+
+<div class="buttons">
+  <div class="number-buttons">
+    {{#each numberButtons as |numberButton|}}
+      <button type="button" id="button-{{numberButton}}" {{on "click" (fn this.addNumberToDisplay numberButton)}}>
+        {{numberButton}}
+      </button>
+    {{/each}}
+  </div>
 </div>
 {{yield}}
