@@ -1,5 +1,5 @@
 <div class="display">
-  {{result}}  
+  {{displayText}}
 </div>
 
 <!-- BEGIN BUTTONS SECTION -->
@@ -8,7 +8,7 @@
     {{#each numberButtons as |numberButton|}}
       <button type="button"
               id="button-{{numberButton}}"
-              {{on "click" (fn this.addNumberToDisplay numberButton)}}>
+              {{on "click" (fn this.addNumberToDisplay numberButton)}} >
         {{numberButton}}
       </button>
     {{/each}}
@@ -17,10 +17,11 @@
             {{on "click" this.addDecimalPointToDisplay}}>.</button>
   </div>
   <div class="operation-buttons">
-    <button type="button">+</button>
-    <button type="button">-</button>
-    <button type="button">X</button>
-    <button type="button">/</button>
+    <button type="button" {{on "click" (fn this.executeOperation "+")}}>+</button>
+    <button type="button" {{on "click" (fn this.executeOperation "-")}}>-</button>
+    <button type="button" {{on "click" (fn this.executeOperation "*")}}>X</button>
+    <button type="button" {{on "click" (fn this.executeOperation "/")}}>/</button>
+    <button type="button">=</button>
   </div>
 </div>
 <!-- END OF BUTTONS SECTION -->

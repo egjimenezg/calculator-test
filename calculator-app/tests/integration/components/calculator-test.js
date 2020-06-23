@@ -8,14 +8,14 @@ module('Integration | Component | calculator', function(hooks) {
 
   test('it renders', async function(assert) {
     await render(hbs`<Calculator />`);
-    assert.equal(this.element.textContent.trim().replace(/\s+/g,' '), '1 2 3 4 5 6 7 8 9');
+    assert.equal(this.element.textContent.trim().replace(/\s+/g,' '), '0 0 1 2 3 4 5 6 7 8 9 . + - X / =');
   });
 
   test('it concatenate numbers and add them in display screen', async function(assert) {
     await render(hbs`<Calculator />`);
     await click('#button-9');
     await click('#button-6');
-    assert.equal(this.element.querySelector('.display').textContent.trim(), '96','Numbers are added to display screen');
+    assert.equal(this.element.querySelector('.display').textContent.trim(), '96', 'Numbers are added to display screen');
   });
 
   test('it adds decimal point to display screen only once', async function(assert) {
