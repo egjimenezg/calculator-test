@@ -6,42 +6,56 @@ export default class OperationSolverService extends Service {
   leftOperand = "";
   rightOperand = "";
   operator = "";
+  operations = {
+   "+": this.sum,
+   "-": this.subtract,
+   "*": this.multiply,
+   "/": this.divide
+  };
 
-  solve(operand, operator){
+  solve(operand, pressedOperator){
     if(operand === "0")
       return operand;
 
-    this.operator = operator;
-
     if(isEmpty(this.leftOperand)){
       this.leftOperand = operand;
+      this.operator = pressedOperator;
       return this.leftOperand;
     }
 
     this.rightOperand = operand;
 
-    switch(operator){
-      case '+':
-        return this.sum();
-      case '-':
-        return "ERROR";
-        break;
-      case '*':
-        return "ERROR";
-        break;
-      case '/':
-        return "ERROR";
-        break;
-      default:
-        return "ERROR";
-    }
-    
+    if(!isEmpty(this.operator)){
+      this.leftOperand = this.operations[this.operator](this.leftOperand, this.rightOperand);
+    } else {
+      this.leftOperand = this.operations[pressedOperator](this.leftOperand, this.rightOperand);
+    } 
+
+    delete this.rightOperand;
+
+    this.operator = pressedOperator;
+
+    return this.leftOperand;
   }
 
-  sum(){
-    this.leftOperand = (BigInt(this.leftOperand) + BigInt(this.rightOperand)).toString();
-    delete this.rightOperand;
-    return this.leftOperand;
+  sum(left, right){
+    return (BigInt(left) + BigInt(right)).toString();
+  }
+
+  subtract(left, right){
+    return (BigInt(left) - BigInt(right)).toString();
+  }
+  
+  multiply(left, right){
+    return (BigInt(left) * BigInt(right)).toString();
+  }
+
+  divide(left, right){
+    if(right == "0"){
+      return "Error";
+    }
+    
+    return (BigInt(left) / BigInt(right)).toString();
   }
 
   getRightOperand(){

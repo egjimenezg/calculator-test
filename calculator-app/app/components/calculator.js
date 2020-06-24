@@ -30,7 +30,12 @@ export default class CalculatorComponent extends Component {
 
   @action
   executeOperation(operator){
-    this.displayText = this.operationSolver.solve(this.displayText, operator).toString();
+    this.displayText = this.operationSolver.solve(this.displayText, operator);
+  }
+
+  @action
+  getResult(){
+    this.displayText = this.operationSolver.getResult();
   }
 
 }
