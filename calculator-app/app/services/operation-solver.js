@@ -11,14 +11,17 @@ export default class OperationSolverService extends Service {
    "/": this.divide
   };
 
-  solve(currentValue, pressedOperator){
+  calculate(currentValue, pressedOperator, isRightOperand){
     if(isEmpty(this.operator)){
       this.operator = pressedOperator;
       this.result = Number(currentValue);
       return this.result.toString();
     }
 
-    this.result = this.operations[this.operator](this.result, Number(currentValue));
+    if(isRightOperand){
+      this.result = this.operations[this.operator](this.result, Number(currentValue));
+    }
+
     this.operator = pressedOperator;
 
     return this.result.toString() 
