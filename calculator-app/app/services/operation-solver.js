@@ -1,10 +1,8 @@
 import Service from '@ember/service';
-import { A } from '@ember/array';
 import { isEmpty } from '@ember/utils';
 
 export default class OperationSolverService extends Service {
-  leftOperand = "";
-  rightOperand = "";
+  result = Number(0);
   operator = "";
   operations = {
    "+": this.sum,
@@ -13,61 +11,51 @@ export default class OperationSolverService extends Service {
    "/": this.divide
   };
 
-  solve(operand, pressedOperator){
-    if(operand === "0")
-      return operand;
-
-    if(isEmpty(this.leftOperand)){
-      this.leftOperand = operand;
+  solve(currentValue, pressedOperator){
+    if(isEmpty(this.operator)){
       this.operator = pressedOperator;
-      return this.leftOperand;
+      this.result = Number(currentValue);
+      return this.result.toString();
     }
 
-    this.rightOperand = operand;
-
-    if(!isEmpty(this.operator)){
-      this.leftOperand = this.operations[this.operator](this.leftOperand, this.rightOperand);
-    } else {
-      this.leftOperand = this.operations[pressedOperator](this.leftOperand, this.rightOperand);
-    } 
-
-    delete this.rightOperand;
-
+    this.result = this.operations[this.operator](this.result, Number(currentValue));
     this.operator = pressedOperator;
 
-    return this.leftOperand;
+    return this.result.toString() 
   }
 
   sum(left, right){
-    return (BigInt(left) + BigInt(right)).toString();
+    return left + right;
   }
 
-  subtract(left, right){
-    return (BigInt(left) - BigInt(right)).toString();
+  subtract(left,right){
+    return left-right;
   }
   
-  multiply(left, right){
-    return (BigInt(left) * BigInt(right)).toString();
+  multiply(left,right){
+    return left*right;
   }
 
-  divide(left, right){
-    if(right == "0"){
+  divide(left,right){
+    if(right == Number("0")){
       return "Error";
     }
     
-    return (BigInt(left) / BigInt(right)).toString();
+    return left/right; 
   }
 
-  getRightOperand(){
-    return this.rightOperand;
-  }
+  getResult(currentValue){
+    if(isEmpty(this.operator)){
+      this.result = currentValue;
+      return this.result.toString(); 
+    }
 
-  setRightOperand(rightOperand){
-    this.rightOperand = rightOperand;
-  }
+    const operationResult = this.operations[this.operator](this.result, Number(currentValue));
 
-  getLeftOperand(){
-    return this.leftOperand;
+    delete this.operator;
+    delete this.result;
+
+    return operationResult.toString();
   }
 
 }

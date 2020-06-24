@@ -12,13 +12,13 @@ module('Unit | Service | operation-solver', function(hooks) {
     assert.strictEqual(service.solve('50','+'), '80');
   });
 
-  test('should execute consecutive sums and subtractions', function(assert){
+  test('should execute consecutive sum, subtraction, multiplication and division', function(assert){
     let service = this.owner.lookup('service:operation-solver');
 
-    assert.strictEqual(service.solve('50','+'), '50');
-    assert.strictEqual(service.solve('20','-'), '70');
-    assert.strictEqual(service.solve('15','+'), '55');
-
+    assert.strictEqual(service.solve('10','+'), '10');
+    assert.strictEqual(service.solve('10','*'), '20');
+    assert.strictEqual(service.solve('5','/'), '100');
+    assert.strictEqual(service.getResult('100'), '1');
   });
 
 });

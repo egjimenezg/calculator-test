@@ -8,14 +8,15 @@ export default class CalculatorComponent extends Component {
   @service operationSolver;
   @tracked numberButtons = [...Array(10).keys()];
   @tracked displayText = "0";
+  @tracked operatorPressed = false;
 
   @action
   addNumberToDisplay(number){
     if(this.displayText === "0"){
       this.displayText = number.toString();
-    } else if(!isEmpty(this.operationSolver.getLeftOperand()) && isEmpty(this.operationSolver.getRightOperand())){
+    } else if(this.operatorPressed){
       this.displayText = number.toString();
-      this.operationSolver.setRightOperand(this.displayText);
+      this.operatorPressed = false;
     } else {
       this.displayText = this.displayText.concat(number);
     }
@@ -30,12 +31,14 @@ export default class CalculatorComponent extends Component {
 
   @action
   executeOperation(operator){
+    this.operatorPressed = true;
     this.displayText = this.operationSolver.solve(this.displayText, operator);
   }
 
   @action
   getResult(){
-    this.displayText = this.operationSolver.getResult();
+    this.operatorPressed = true;
+    this.displayText = this.operationSolver.getResult(this.displayText);
   }
 
 }
