@@ -1,27 +1,77 @@
-<div class="display">
-  {{displayText}}
-</div>
+<div class="container">
+  <div class="row" >
+    <div class="col-md-4 offset-md-4" id="calculator">
+      <!-- BEGIN BUTTONS SECTION -->
+      <div class="row">
+        <div class="col display">
+          {{displayText}}
+        </div>
+      </div>
+      <!-- END OF BUTTONS SECTION -->
+      
+      <!-- BEGIN BUTTONS SECTION -->
+      <div class="buttons row">
+        <div class="number-buttons col">
+          {{#each numberMatrix as |numberRow|}}
+            <div class="row buttons-row">
+              {{#each numberRow as |numberButton|}}
+                <div class="col">
+                  <button type="button"
+                          id="button-{{numberButton}}"
+                          class="btn btn-primary number-button"
+                          {{on "click" (fn this.addNumberToDisplay numberButton)}}>
+                    {{numberButton}}
+                  </button>
+                </div>
+              {{/each}}
+            </div>
+          {{/each}}
+          <div class="row buttons-row">
+            <div class="col">
+              <button type="button"
+                      class="btn btn-primary number-button"
+                      {{on "click" (fn this.addNumberToDisplay '0')}}>0</button>
+            </div>
+            <div class="col">
+              <button type="button"
+                      class="btn btn-primary number-button"
+                      id="decimal-point"
+                      {{on "click" this.addDecimalPointToDisplay}}>.</button>
+            </div>
+          </div>
+        </div>
 
-<!-- BEGIN BUTTONS SECTION -->
-<div class="buttons">
-  <div class="number-buttons">
-    {{#each numberButtons as |numberButton|}}
-      <button type="button"
-              id="button-{{numberButton}}"
-              {{on "click" (fn this.addNumberToDisplay numberButton)}} >
-        {{numberButton}}
-      </button>
-    {{/each}}
-    <button type="button"
-            id="decimal-point"
-            {{on "click" this.addDecimalPointToDisplay}}>.</button>
-  </div>
-  <div class="operation-buttons">
-    <button type="button" {{on "click" (fn this.executeOperation "+")}}>+</button>
-    <button type="button" {{on "click" (fn this.executeOperation "-")}}>-</button>
-    <button type="button" {{on "click" (fn this.executeOperation "*")}}>X</button>
-    <button type="button" {{on "click" (fn this.executeOperation "/")}}>/</button>
-    <button type="button" {{on "click" this.getResult}}>=</button>
+        <div class="operation-buttons col">
+          <div class="row buttons-row">
+            <div class="col">
+              <button type="button" class="btn btn-warning" {{on "click" (fn this.executeOperation "*")}}>x</button>
+              
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-warning" {{on "click" (fn this.executeOperation "/")}}>/</button>
+            </div>
+          </div>
+          
+          <div class="row buttons-row">
+            <div class="col">
+              <button type="button" class="btn btn-warning" {{on "click" (fn this.executeOperation "+")}}>+</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-warning" {{on "click" (fn this.executeOperation "-")}}>-</button>
+            </div>
+          </div>  
+
+          <div class="row buttons-row">
+            <div class="col">
+              <button type="button" class="btn btn-warning" {{on "click" this.getResult}}>=</button>
+            </div>
+            <div class="col">
+            </div>
+          </div> 
+          
+        </div>
+      </div>
+      <!-- END OF BUTTONS SECTION -->
+    </div>
   </div>
 </div>
-<!-- END OF BUTTONS SECTION -->
