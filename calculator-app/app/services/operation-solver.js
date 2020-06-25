@@ -1,9 +1,11 @@
 import Service from '@ember/service';
 import { isEmpty } from '@ember/utils';
+import { tracked } from '@glimmer/tracking';
 
 export default class OperationSolverService extends Service {
-  result = Number(0);
-  operator = "";
+  @tracked result = Number(0);
+  @tracked operator = "";
+  
   operations = {
    "+": this.sum,
    "-": this.subtract,
@@ -11,19 +13,20 @@ export default class OperationSolverService extends Service {
    "/": this.divide
   };
 
-  calculate(currentValue, pressedOperator, isRightOperand){
-    if(isEmpty(this.operator)){
-      this.operator = pressedOperator;
-      this.result = Number(currentValue);
-      return this.result.toString();
-    }
+  setLeftOperandAndOperator(leftOperand, operator){
+    this.result = Number(leftOperand);
+    this.operator = operator;
+  }
 
-    if(isRightOperand){
+  calculate(currentValue, operator){
+    try {
       this.result = this.operations[this.operator](this.result, Number(currentValue));
+    } catch(e){
+      this.cleanOperation();
+      return e.message;
     }
 
-    this.operator = pressedOperator;
-
+    this.operator = operator;
     return this.result.toString() 
   }
 
@@ -41,7 +44,7 @@ export default class OperationSolverService extends Service {
 
   divide(left,right){
     if(right == Number("0")){
-      return "Error";
+      throw new Error("Error");
     }
     
     return left/right; 
@@ -49,16 +52,23 @@ export default class OperationSolverService extends Service {
 
   getResult(currentValue){
     if(isEmpty(this.operator)){
-      this.result = currentValue;
-      return this.result.toString(); 
+      this.result = Number(currentValue);
+      return currentValue; 
     }
 
-    const operationResult = this.operations[this.operator](this.result, Number(currentValue));
+    try{
+      const operationResult = this.operations[this.operator](this.result, Number(currentValue)).toString();
+      this.cleanOperation();
+      return operationResult.toString();
+    } catch(e) {
+      this.cleanOperation();
+      return e.message;
+    }
+  }
 
-    delete this.operator;
-    delete this.result;
-
-    return operationResult.toString();
+  cleanOperation(){
+    this.operator = "";
+    this.result = Number(0);
   }
 
 }

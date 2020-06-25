@@ -11,10 +11,10 @@
   background: #FFFFFF;
 }
 
-.number-button {
-  border-radius: 2px;
-}
-
 .buttons-row {
   margin-top: 10px;
+}
+
+.operation-buttons .btn {
+  width: 100%;
 }

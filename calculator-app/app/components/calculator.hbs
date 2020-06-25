@@ -1,13 +1,15 @@
 <div class="container">
   <div class="row" >
-    <div class="col-md-4 offset-md-4" id="calculator">
-      <!-- BEGIN BUTTONS SECTION -->
+    <div class="col-md-4 offset-md-4" id="calculator"
+         tabindex="0" {{did-insert this.focus}}
+         {{on "keydown" this.keyDown}}>
+      <!-- BEGIN DISPLAY SECTION -->
       <div class="row">
-        <div class="col display">
+        <div class="col display"  >
           {{displayText}}
         </div>
       </div>
-      <!-- END OF BUTTONS SECTION -->
+      <!-- END OF DISPLAY SECTION -->
       
       <!-- BEGIN BUTTONS SECTION -->
       <div class="buttons row">
@@ -19,7 +21,7 @@
                   <button type="button"
                           id="button-{{numberButton}}"
                           class="btn btn-primary number-button"
-                          {{on "click" (fn this.addNumberToDisplay numberButton)}}>
+                          {{on "click" (fn this.addNumberOrDotToDisplay numberButton)}}>
                     {{numberButton}}
                   </button>
                 </div>
@@ -28,23 +30,21 @@
           {{/each}}
           <div class="row buttons-row">
             <div class="col">
-              <button type="button"
-                      class="btn btn-primary number-button"
-                      {{on "click" (fn this.addNumberToDisplay '0')}}>0</button>
+              <button type="button" id="button-0" class="btn btn-primary number-button"
+                      {{on "click" (fn this.addNumberOrDotToDisplay '0')}}>0</button>
             </div>
             <div class="col">
-              <button type="button"
-                      class="btn btn-primary number-button"
-                      id="decimal-point"
-                      {{on "click" this.addDecimalPointToDisplay}}>.</button>
-            </div>
+              <button type="button" id="decimal-point" class="btn btn-primary number-button"
+                      {{on "click" (fn this.addNumberOrDotToDisplay '.')}}>.</button>
+            </div> 
           </div>
         </div>
 
         <div class="operation-buttons col">
           <div class="row buttons-row">
             <div class="col">
-              <button type="button" class="btn btn-warning" {{on "click" (fn this.executeOperation "*")}}>x</button>
+              <button type="button" id="multiply-button" class="btn btn-warning"
+                      {{on "click" (fn this.executeOperation "*")}}>x</button>
               
             </div>
             <div class="col">
@@ -54,21 +54,31 @@
           
           <div class="row buttons-row">
             <div class="col">
-              <button type="button" class="btn btn-warning" {{on "click" (fn this.executeOperation "+")}}>+</button>
+              <button type="button" id="sum-button"
+                      class="btn btn-warning" {{on "click" (fn this.executeOperation "+")}}>+</button>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-warning" {{on "click" (fn this.executeOperation "-")}}>-</button>
+              <button type="button" class="btn btn-warning"
+                      {{on "click" (fn this.executeOperation "-")}}>
+                -
+              </button>
             </div>
           </div>  
 
           <div class="row buttons-row">
             <div class="col">
-              <button type="button" class="btn btn-warning" {{on "click" this.getResult}}>=</button>
+              <button type="button" id="equal-button" class="btn btn-warning"
+                      {{on "click" this.getResult}}>
+                =
+              </button>
             </div>
             <div class="col">
+              <button type="button" class="btn btn-warning"
+                                    {{on "click" this.clear}}>
+                C
+              </button>
             </div>
           </div> 
-          
         </div>
       </div>
       <!-- END OF BUTTONS SECTION -->
