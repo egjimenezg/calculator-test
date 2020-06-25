@@ -43,22 +43,23 @@
         <div class="operation-buttons col">
           <div class="row buttons-row">
             <div class="col">
-              <button type="button" id="multiply-button" class="btn btn-warning"
+              <button type="button" id="multiply-button" class="btn btn-light"
                       {{on "click" (fn this.executeOperation "*")}}>x</button>
               
             </div>
             <div class="col">
-              <button type="button" class="btn btn-warning" {{on "click" (fn this.executeOperation "/")}}>/</button>
+              <button type="button" id="division-button" class="btn btn-light"
+                      {{on "click" (fn this.executeOperation "/")}}>÷</button>
             </div>
           </div>
           
           <div class="row buttons-row">
             <div class="col">
-              <button type="button" id="sum-button"
-                      class="btn btn-warning" {{on "click" (fn this.executeOperation "+")}}>+</button>
+              <button type="button" id="sum-button" class="btn btn-light"
+                      {{on "click" (fn this.executeOperation "+")}}>+</button>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-warning"
+              <button type="button" id="subtract-button" class="btn btn-light"
                       {{on "click" (fn this.executeOperation "-")}}>
                 -
               </button>
@@ -67,14 +68,14 @@
 
           <div class="row buttons-row">
             <div class="col">
-              <button type="button" id="equal-button" class="btn btn-warning"
+              <button type="button" id="equal-button" class="btn btn-light"
                       {{on "click" this.getResult}}>
                 =
               </button>
             </div>
             <div class="col">
-              <button type="button" class="btn btn-warning"
-                                    {{on "click" this.clear}}>
+              <button type="button" id="clear-button" class="btn btn-light"
+                      {{on "click" this.clear}}>
                 C
               </button>
             </div>

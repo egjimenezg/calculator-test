@@ -22,7 +22,6 @@ export default class OperationSolverService extends Service {
     try {
       this.result = this.operations[this.operator](this.result, Number(currentValue));
     } catch(e){
-      this.cleanOperation();
       return e.message;
     }
 
@@ -57,11 +56,10 @@ export default class OperationSolverService extends Service {
     }
 
     try{
-      const operationResult = this.operations[this.operator](this.result, Number(currentValue)).toString();
+      const operationResult = this.operations[this.operator](this.result, Number(currentValue));
       this.cleanOperation();
       return operationResult.toString();
     } catch(e) {
-      this.cleanOperation();
       return e.message;
     }
   }

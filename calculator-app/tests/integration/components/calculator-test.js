@@ -8,7 +8,7 @@ module('Integration | Component | calculator', function(hooks) {
 
   test('it renders', async function(assert) {
     await render(hbs`<Calculator />`);
-    assert.equal(this.element.textContent.trim().replace(/\s+/g,' '), '0 0 1 2 3 4 5 6 7 8 9 . + - X / =');
+    assert.equal(this.element.textContent.trim().replace(/\s+/g,' '), '0 7 8 9 4 5 6 1 2 3 0 . x ÷ + - = C');
   });
 
   test('it concatenate numbers and add them in display screen', async function(assert) {
@@ -54,5 +54,19 @@ module('Integration | Component | calculator', function(hooks) {
 
     assert.equal(this.element.querySelector('.display').textContent.trim(), '90', 'Operation (35+10)*2 should display 90');
   });
+
+
+  test('it clears the screen when the erase button is pressed', async function(assert){
+    await render(hbs`<Calculator />`);
+    await click('#button-9');
+    await click('#button-0');
+    await click('#multiply-button');
+    await click('#button-1');
+    await click('#button-0');
+    await click('#clear-button');
+
+    assert.equal(this.element.querySelector('.display').textContent.trim(), '0', 'Clear button clear the running total and displays 0');
+  });
+
 
 });

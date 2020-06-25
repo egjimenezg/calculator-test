@@ -9,6 +9,7 @@ export default class CalculatorComponent extends Component {
   @service operationSolver;
   @tracked displayText = "0";
   @tracked operatorPressed = false;
+  @tracked equalPressed = false;
   @tracked isRightOperand = false;
   
   focus(element){
@@ -17,7 +18,7 @@ export default class CalculatorComponent extends Component {
 
   @action
   keyDown(event){
-    if(event.keyCode == 13){
+    if(event.keyCode == 187){
       this.getResult();
       return;
     }
@@ -35,11 +36,20 @@ export default class CalculatorComponent extends Component {
 
   @action
   addNumberOrDotToDisplay(input){
-    if(input == "." && this.displayText.indexOf(".") !== -1){
+    if(this.hasErrors()){
+      this.clear();  
       return;
     }
 
-    if(this.displayText === "0" || this.operatorPressed){
+    if(input === "." && this.displayText.indexOf(".") !== -1){
+      return;
+    }
+
+    if(this.operatorPressed){
+      this.isRightOperand = true;
+    }
+
+    if(this.canScreenBeOverwritten()){
       if(input == "."){
         this.displayText = "0".concat(input.toString());
       } else {
@@ -47,6 +57,7 @@ export default class CalculatorComponent extends Component {
       }
 
       this.operatorPressed = false;
+      this.equalPressed = false;
     } else {
       this.displayText = this.displayText.concat(input);
     }
@@ -60,26 +71,27 @@ export default class CalculatorComponent extends Component {
     }
 
     this.operatorPressed = true;
-
+    
     if(!this.isRightOperand){
       this.operationSolver.setLeftOperandAndOperator(this.displayText, operator);
-      this.isRightOperand = true;
       return;
     }
-    
+
     this.displayText = this.operationSolver.calculate(this.displayText, operator);
     this.isRightOperand = false;
   }
 
   @action
   getResult(){
+    this.equalPressed = true;
+
     if(this.hasErrors()){
       this.clear();
       return;
     }
 
-    this.operatorPressed = true;
     this.isRightOperand = false;
+    this.operatorPressed = false;
     this.displayText = this.operationSolver.getResult(this.displayText);
   }
 
@@ -113,6 +125,10 @@ export default class CalculatorComponent extends Component {
 
   isOperator(keyCode){
     return [107,109,106,111].includes(keyCode);
+  }
+
+  canScreenBeOverwritten(){
+    return this.displayText === "0" || this.operatorPressed || this.equalPressed;
   }
 
   hasErrors(){

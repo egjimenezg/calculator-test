@@ -37,6 +37,6 @@ module('Unit | Service | operation-solver', function(hooks) {
     service.setLeftOperandAndOperator(Number(50), '/');
     assert.strictEqual(service.getResult('0'), 'Error');
   });
-  
+
 
 });
