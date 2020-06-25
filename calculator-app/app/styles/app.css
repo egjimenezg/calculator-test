@@ -1,20 +1,45 @@
 #calculator {
+  margin-top: 30px;
   background: #293A48;
   min-height: 250px;
 }
 
-.display {
-  min-height: 40px;
+.display-container {
+  padding: 5px;
   border: solid 1px;
   font-size: 20px;
-  vertical-align: middle;
-  background: #FFFFFF;
+  background: #8ED1F7;
+  border: none;
+  text-align: right;
+  overflow: scroll;
+  right:0;
+  margin: 10px; 
+}
+
+.buttons {
+  margin-bottom: 20px;
 }
 
 .buttons-row {
   margin-top: 10px;
 }
 
-.operation-buttons .btn {
-  width: 100%;
+.operation-buttons .col {
+  padding-left: 0px;
+}
+
+/**** BUTTONS ****/
+#equal-button, #clear-button {
+  border: none;
+  background: #F95204;
+  color: #FFFFFF;
+}
+
+.number-buttons .btn {
+  background: #1A6894;
+}
+
+.operator-button {
+  background: #7EA7DA;
+  color: #FFFFFF;
 }
