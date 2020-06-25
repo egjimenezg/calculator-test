@@ -15,6 +15,7 @@ module('Integration | Component | calculator', function(hooks) {
     await render(hbs`<Calculator />`);
     await click('#button-9');
     await click('#button-6');
+
     assert.equal(this.element.querySelector('.display').textContent.trim(), '96', 'Numbers are added to display screen');
   });
 
@@ -41,7 +42,7 @@ module('Integration | Component | calculator', function(hooks) {
     assert.equal(this.element.querySelector('.display').textContent.trim(), '120', 'Sum of 90 and 30 will display 120');
   });
 
-  test('it sums two numbers and multiply by another', async function(assert){
+  test('it shows the result of consecutive operations when equal button is pressed', async function(assert){
     await render(hbs`<Calculator />`);
     await click('#button-3');
     await click('#button-5'); 
@@ -68,5 +69,16 @@ module('Integration | Component | calculator', function(hooks) {
     assert.equal(this.element.querySelector('.display').textContent.trim(), '0', 'Clear button clear the running total and displays 0');
   });
 
+  test('it executes consecutive operations using floating point numbers', async function(assert){
+    await render(hbs`<Calculator />`);
+    await click('#button-3');
+    await click('#decimal-point');
+    await click('#button-5');
+    await click('#sum-button'); 
+    await click('#decimal-point');
+    await click('#button-5');
+    await click('#equal-button');
+    assert.equal(this.element.querySelector('.display').textContent.trim(), '4', 'Operation 3.5+.5 should display 4');
+  });
 
 });

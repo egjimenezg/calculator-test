@@ -2,8 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
-import $ from 'jquery';
 
 export default class CalculatorComponent extends Component {
   @service operationSolver;
@@ -41,16 +39,12 @@ export default class CalculatorComponent extends Component {
       return;
     }
 
-    if(input === "." && this.displayText.indexOf(".") !== -1){
-      return;
-    }
-
     if(this.operatorPressed){
       this.isRightOperand = true;
     }
 
     if(this.canScreenBeOverwritten()){
-      if(input == "."){
+      if(input === "."){
         this.displayText = "0".concat(input.toString());
       } else {
         this.displayText = input.toString();
@@ -58,6 +52,8 @@ export default class CalculatorComponent extends Component {
 
       this.operatorPressed = false;
       this.equalPressed = false;
+    } else if(input === "." && this.displayText.indexOf(".") !== -1){
+      return;
     } else {
       this.displayText = this.displayText.concat(input);
     }
