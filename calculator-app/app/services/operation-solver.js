@@ -42,8 +42,8 @@ export default class OperationSolverService extends Service {
   }
 
   divide(left,right){
-    if(right == Number("0")){
-      throw new Error("Error");
+    if(right === Number("0")){
+      throw new Error("Error: Division by 0");
     }
     
     return left/right; 
@@ -67,6 +67,19 @@ export default class OperationSolverService extends Service {
   cleanOperation(){
     this.operator = "";
     this.result = Number(0);
+  }
+
+  isInputValid(operand, operator){
+    return this.isOperandValid(operand) && this.isOperatorValid(operator);
+  }
+
+  isOperandValid(operand){
+    const numbersRegex = /^[0-9]+(\.[0-9]+)?$/;
+    return numbersRegex.test(operand);
+  }
+
+  isOperatorValid(operator){
+    return Object.keys(this.operations).includes(operator);
   }
 
 }

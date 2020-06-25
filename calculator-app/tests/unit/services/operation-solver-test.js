@@ -35,8 +35,23 @@ module('Unit | Service | operation-solver', function(hooks) {
   test('should fail executing a division by zero', function(assert){
     let service = this.owner.lookup('service:operation-solver');
     service.setLeftOperandAndOperator(Number(50), '/');
-    assert.strictEqual(service.getResult('0'), 'Error');
+    assert.strictEqual(service.getResult('0'), 'Error: Division by 0');
   });
 
+  test('should fail assigning an invalid number or operator', function(assert){
+    let service = this.owner.lookup('service:operation-solver');
+    assert.strictEqual(service.isInputValid('',''), false);
+    assert.strictEqual(service.isInputValid('abc',''), false);
+    assert.strictEqual(service.isInputValid('.','+'), false);
+    assert.strictEqual(service.isInputValid('0....9','.'), false);
+    assert.strictEqual(service.isInputValid('000009','x'), false);
+    assert.strictEqual(service.isInputValid('000009','+'), true);
+    assert.strictEqual(service.isInputValid('0.00000','+'), true);
+    assert.strictEqual(service.isInputValid('5','+'), true);
+    assert.strictEqual(service.isInputValid('6','-'), true);
+    assert.strictEqual(service.isInputValid('999999','-'), true);
+    assert.strictEqual(service.isInputValid('110.50','*'),true);
+    assert.strictEqual(service.isInputValid('0.000','+'), true);
+  });
 
 });

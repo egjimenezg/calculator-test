@@ -3,18 +3,18 @@
     <div class="col-md-4 offset-md-4" id="calculator"
          tabindex="0" {{did-insert this.focus}}
          {{on "keydown" this.keyDown}}>
-      <!-- BEGIN DISPLAY SECTION -->
+      {{!-- BEGIN DISPLAY SECTION --}}
       <div class="row">
         <div class="col display"  >
-          {{displayText}}
+          {{this.displayText}}
         </div>
       </div>
-      <!-- END OF DISPLAY SECTION -->
+      {{!-- END OF DISPLAY SECTION --}}
       
-      <!-- BEGIN BUTTONS SECTION -->
+      {{!-- BEGIN BUTTONS SECTION --}}
       <div class="buttons row">
         <div class="number-buttons col">
-          {{#each numberMatrix as |numberRow|}}
+          {{#each this.numberMatrix as |numberRow|}}
             <div class="row buttons-row">
               {{#each numberRow as |numberButton|}}
                 <div class="col">
@@ -40,12 +40,11 @@
           </div>
         </div>
 
-        <div class="operation-buttons col">
+        <div class="operation-buttons col text-right">
           <div class="row buttons-row">
             <div class="col">
               <button type="button" id="multiply-button" class="btn btn-light"
                       {{on "click" (fn this.executeOperation "*")}}>x</button>
-              
             </div>
             <div class="col">
               <button type="button" id="division-button" class="btn btn-light"
@@ -82,7 +81,7 @@
           </div> 
         </div>
       </div>
-      <!-- END OF BUTTONS SECTION -->
+      {{!-- END OF BUTTONS SECTION --}}
     </div>
   </div>
 </div>

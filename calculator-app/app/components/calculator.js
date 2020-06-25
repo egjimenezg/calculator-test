@@ -128,6 +128,6 @@ export default class CalculatorComponent extends Component {
   }
 
   hasErrors(){
-    return this.displayText === "Error";
+    return this.displayText.startsWith("Error");
   }
 }
