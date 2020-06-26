@@ -16,18 +16,25 @@ export default class CalculatorComponent extends Component {
 
   @action
   keyDown(event){
-    if(event.keyCode == 187){
-      this.getResult();
+    if(event.key === '=' ||  event.keyCode === 13){
+      event.preventDefault();
+      this.clickButton('equal-button');
       return;
     }
 
-    if(this.isNumericOrDecimalPoint(event.keyCode)){
-      this.addNumberOrDotToDisplay(event.key);
+    if(event.key === "Clear"){
+      this.clickButton("clear-button");
+      return;
+    }
+
+    if(this.isNumericOrDecimalPoint(event.key)){
+      const selector = (event.key === ".") ? "decimal-point" : `button-${event.key}`;
+      this.clickButton(selector);
       return;
     }
     
-    if(this.isOperator(event.keyCode)){
-      this.executeOperation(event.key);
+    if(this.isOperator(event.key)){
+      this.clickButton(this.getOperatorSelector(event.key));
       return;
     } 
   }
@@ -66,6 +73,11 @@ export default class CalculatorComponent extends Component {
       return;
     }
 
+    if(!this.operationSolver.isInputValid(this.displayText, operator)){
+      this.displayText = "Error: Invalid input";
+      return;
+    }
+
     this.operatorPressed = true;
     
     if(!this.isRightOperand){
@@ -79,13 +91,17 @@ export default class CalculatorComponent extends Component {
 
   @action
   getResult(){
-    this.equalPressed = true;
-
     if(this.hasErrors()){
       this.clear();
       return;
     }
 
+    if(!this.operationSolver.isOperandValid(this.displayText)){
+      this.displayText = "Error: Invalid input";
+      return;
+    }
+
+    this.equalPressed = true;
     this.isRightOperand = false;
     this.operatorPressed = false;
     this.displayText = this.operationSolver.getResult(this.displayText);
@@ -115,12 +131,12 @@ export default class CalculatorComponent extends Component {
     return matrix;
   }
 
-  isNumericOrDecimalPoint(keyCode){
-    return (keyCode >= 48 && keyCode <= 57) || keyCode === 190;
+  isNumericOrDecimalPoint(key){
+    return (key >= 0 && key <= 9) || key === ".";
   }
 
-  isOperator(keyCode){
-    return [107,109,106,111].includes(keyCode);
+  isOperator(key){
+    return ['+','-','*','/'].includes(key);
   }
 
   canScreenBeOverwritten(){
@@ -129,5 +145,21 @@ export default class CalculatorComponent extends Component {
 
   hasErrors(){
     return this.displayText.startsWith("Error");
+  }
+
+  getOperatorSelector(operator){
+    const selectors = {
+      "+": "sum-button",
+      "-": "subtract-button",
+      "*": "multiply-button",
+      "/": "division-button"
+    };
+
+    return selectors[operator];
+  }
+
+  clickButton(selector){
+    document.querySelector(`#${selector}`).focus();
+    document.querySelector(`#${selector}`).click();
   }
 }

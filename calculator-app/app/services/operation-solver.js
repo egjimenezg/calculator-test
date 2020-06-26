@@ -5,12 +5,12 @@ import { tracked } from '@glimmer/tracking';
 export default class OperationSolverService extends Service {
   @tracked result = Number(0);
   @tracked operator = "";
-  
+
   operations = {
-   "+": this.sum,
-   "-": this.subtract,
-   "*": this.multiply,
-   "/": this.divide
+    "+": this.sum,
+    "-": this.subtract,
+    "*": this.multiply,
+    "/": this.divide
   };
 
   setLeftOperandAndOperator(leftOperand, operator){
@@ -74,7 +74,7 @@ export default class OperationSolverService extends Service {
   }
 
   isOperandValid(operand){
-    const numbersRegex = /^[0-9]+(\.[0-9]+)?$/;
+    const numbersRegex = /^[0-9]+\.?([0-9]+)?$/;
     return numbersRegex.test(operand);
   }
 

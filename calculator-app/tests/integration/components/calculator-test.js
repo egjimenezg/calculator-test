@@ -30,7 +30,7 @@ module('Integration | Component | calculator', function(hooks) {
     assert.equal(this.element.querySelector('.display').textContent.trim(), '20.5', 'Decimal point can be added only once');
   });
 
-  test('it sums two numbers using sum button', async function(assert){
+  test('it sums, subtracts, multiply and divides using the operator buttons', async function(assert){
     await render(hbs`<Calculator />`);
     await click('#button-9');
     await click('#button-0');
@@ -38,8 +38,28 @@ module('Integration | Component | calculator', function(hooks) {
     await click('#button-3');
     await click('#button-0');
     await click('#equal-button');
-
     assert.equal(this.element.querySelector('.display').textContent.trim(), '120', 'Sum of 90 and 30 will display 120');
+
+    await click('#button-3');
+    await click('#subtract-button');
+    await click('#button-5');
+    await click('#equal-button');
+    assert.equal(this.element.querySelector('.display').textContent.trim(), '-2', '3 minus 5 will display -2');
+
+    await click('#button-2');
+    await click('#button-5');
+    await click('#multiply-button');
+    await click('#button-4');
+    await click('#equal-button');
+    assert.equal(this.element.querySelector('.display').textContent.trim(), '100', '25 multiplied by 4 will display 100');
+
+    await click('#button-5');
+    await click('#button-0');
+    await click('#division-button');
+    await click('#button-1');
+    await click('#button-0');
+    await click('#equal-button');
+    assert.equal(this.element.querySelector('.display').textContent.trim(), '5', '50 divided by 10 will display 5');
   });
 
   test('it shows the result of consecutive operations when equal button is pressed', async function(assert){
@@ -79,6 +99,17 @@ module('Integration | Component | calculator', function(hooks) {
     await click('#button-5');
     await click('#equal-button');
     assert.equal(this.element.querySelector('.display').textContent.trim(), '4', 'Operation 3.5+.5 should display 4');
+  });
+
+  test('it gets an error when a division by zero is executed, then screen is cleared when any button is pressed', async function(assert){
+    await render(hbs`<Calculator />`);
+    await click('#button-8');
+    await click('#button-5');
+    await click('#division-button');
+    await click('#button-0');
+    await click('#equal-button');
+
+    assert.equal(this.element.querySelector('.display').textContent.trim(), 'Error: Division by 0', 'Should display an error when a division by zero is executed');
   });
 
 });
