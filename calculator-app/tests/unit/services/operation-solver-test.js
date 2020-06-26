@@ -45,7 +45,7 @@ module('Unit | Service | operation-solver', function(hooks) {
     assert.strictEqual(service.isInputValid('.','+'), false);
     assert.strictEqual(service.isInputValid('0....9','.'), false);
     assert.strictEqual(service.isInputValid('000009','x'), false);
-    assert.strictEqual(service.isInputValid('0.','x'), true);
+    assert.strictEqual(service.isInputValid('0.','*'), true);
     assert.strictEqual(service.isInputValid('000009','+'), true);
     assert.strictEqual(service.isInputValid('0.00000','+'), true);
     assert.strictEqual(service.isInputValid('5','+'), true);

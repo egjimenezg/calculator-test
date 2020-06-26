@@ -29,6 +29,11 @@
 }
 
 /**** BUTTONS ****/
+.buttons .btn {
+  width: 40px;
+  height: 40px;
+}
+
 #equal-button, #clear-button {
   border: none;
   background: #F95204;
@@ -39,7 +44,10 @@
   background: #1A6894;
 }
 
+
+
 .operator-button {
   background: #7EA7DA;
   color: #FFFFFF;
 }
+
