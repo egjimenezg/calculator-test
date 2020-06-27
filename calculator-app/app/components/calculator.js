@@ -90,7 +90,7 @@ export default class CalculatorComponent extends Component {
       return;
     }
 
-    this.displayText = this.operationSolver.calculate(this.displayText, operator);
+    this.displayText = this.operationSolver.calculateAndSetNewOperator(this.displayText, operator);
     this.isRightOperand = false;
   }
 

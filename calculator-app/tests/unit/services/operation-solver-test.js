@@ -8,16 +8,16 @@ module('Unit | Service | operation-solver', function(hooks) {
     let service = this.owner.lookup('service:operation-solver');
      
     service.setLeftOperandAndOperator(Number(10),'+');
-    assert.strictEqual(service.calculate('10','+'), '20');
-    assert.strictEqual(service.calculate('20','+'), '40');
-    assert.strictEqual(service.calculate('50','+'), '90');
+    assert.strictEqual(service.calculateAndSetNewOperator('10','+'), '20');
+    assert.strictEqual(service.calculateAndSetNewOperator('20','+'), '40');
+    assert.strictEqual(service.calculateAndSetNewOperator('50','+'), '90');
     
     service.cleanOperation();
       
     service.setLeftOperandAndOperator(Number(10),'+');
 
-    assert.strictEqual(service.calculate('10','-'), '20');
-    assert.strictEqual(service.calculate('5', '-'), '15');
+    assert.strictEqual(service.calculateAndSetNewOperator('10','-'), '20');
+    assert.strictEqual(service.calculateAndSetNewOperator('5', '-'), '15');
     assert.strictEqual(service.getResult('5'), '10');
   });
 
@@ -26,9 +26,9 @@ module('Unit | Service | operation-solver', function(hooks) {
 
     service.setLeftOperandAndOperator(Number(10), '+');
 
-    assert.strictEqual(service.calculate('10', '+'), '20');
-    assert.strictEqual(service.calculate('10','*'), '30');
-    assert.strictEqual(service.calculate('5','/'), '150');
+    assert.strictEqual(service.calculateAndSetNewOperator('10', '+'), '20');
+    assert.strictEqual(service.calculateAndSetNewOperator('10','*'), '30');
+    assert.strictEqual(service.calculateAndSetNewOperator('5','/'), '150');
     assert.strictEqual(service.getResult('50'), '3');
   });
 
@@ -38,11 +38,28 @@ module('Unit | Service | operation-solver', function(hooks) {
     assert.strictEqual(service.getResult('0'), 'Error: Division by 0');
   });
 
+  test('should validate operators', function(assert){
+    let service = this.owner.lookup('service:operation-solver');
+    assert.strictEqual(service.isOperandValid('100'), true);
+    assert.strictEqual(service.isOperandValid('100e10'), true);
+    assert.strictEqual(service.isOperandValid('100e-10'), true);
+    assert.strictEqual(service.isOperandValid('100e+10'), true);
+    assert.strictEqual(service.isOperandValid('-5e10'), true);
+    assert.strictEqual(service.isOperandValid('9.1234e+0'),true);
+    assert.strictEqual(service.isOperandValid('100e'), false);
+    assert.strictEqual(service.isOperandValid('-.e20'), false);
+    assert.strictEqual(service.isOperandValid('100e-'), false);
+    assert.strictEqual(service.isOperandValid('100e+'), false);
+  });
+
   test('should fail assigning an invalid number or operator', function(assert){
     let service = this.owner.lookup('service:operation-solver');
     assert.strictEqual(service.isInputValid('',''), false);
     assert.strictEqual(service.isInputValid('abc',''), false);
+    assert.strictEqual(service.isInputValid('+*.0230ab','.'), false);
     assert.strictEqual(service.isInputValid('.','+'), false);
+    assert.strictEqual(service.isInputValid('-.','+'), false);
+    assert.strictEqual(service.isInputValid('-.','-'), false);
     assert.strictEqual(service.isInputValid('0....9','.'), false);
     assert.strictEqual(service.isInputValid('000009','x'), false);
     assert.strictEqual(service.isInputValid('--99.5','*'), false);

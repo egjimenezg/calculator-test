@@ -19,7 +19,7 @@ export default class OperationSolverService extends Service {
     this.operator = operator;
   }
 
-  calculate(currentValue, operator){
+  calculateAndSetNewOperator(currentValue, operator){
     try {
       this.result = Math.round(this.operations[this.operator](this.result, Number(currentValue)) * this.DECIMAL_MULTIPLIER)/this.DECIMAL_MULTIPLIER;
     } catch(e){
@@ -75,7 +75,7 @@ export default class OperationSolverService extends Service {
   }
 
   isOperandValid(operand){
-    const numbersRegex = /^-?[0-9]+\.?([0-9]+)?$/;
+    const numbersRegex = /^-?([0-9]+\.?|\.[0-9]+)[0-9]*(e[+|-]?[0-9]+)?$/;
     return numbersRegex.test(operand);
   }
 
