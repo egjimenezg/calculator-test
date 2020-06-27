@@ -16,14 +16,19 @@ export default class CalculatorComponent extends Component {
 
   @action
   keyDown(event){
-    if(event.key === '=' ||  event.keyCode === 13){
+    if(event.key === "=" ||  event.keyCode === 13){
       event.preventDefault();
-      this.clickButton('equal-button');
+      this.clickButton("equal-button");
       return;
     }
 
     if(event.key === "Clear"){
       this.clickButton("clear-button");
+      return;
+    }
+
+    if(event.key === "Backspace"){
+      this.clickButton(event.key.toLowerCase());
       return;
     }
 
@@ -91,7 +96,31 @@ export default class CalculatorComponent extends Component {
 
   @action
   changeSign(){
+    if(this.hasErrors()){
+      this.clear();
+      return;
+    }
+
     this.displayText = (Number(this.displayText)*-1).toString();
+  }
+
+  @action
+  removeLastNumberPressed(){
+    if(this.hasErrors()){
+      this.clear();
+      return;
+    }
+
+    if(this.displayText === "0"){
+      return;
+    }
+
+    if(this.displayText.length === 1 || (this.displayText.length === 2 && this.displayText.charAt(0) === "-")){
+      this.displayText = "0";
+      return;
+    }
+
+    this.displayText = this.displayText.substring(0,this.displayText.length-1);
   }
 
   @action

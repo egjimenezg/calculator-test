@@ -5,14 +5,13 @@
 }
 
 .display-container {
-  padding: 5px;
+  padding: 10px;
   border: solid 1px;
   font-size: 20px;
   background: #8ED1F7;
   border: none;
   text-align: right;
   overflow: scroll;
-  right:0;
   margin: 10px; 
 }
 
@@ -34,20 +33,34 @@
   height: 40px;
 }
 
+.buttons .number-button:focus {
+  background-color: #0062cc;
+  color: #fff;
+  border-color: #005cbf;
+}
+
 #equal-button, #clear-button {
   border: none;
   background: #F95204;
   color: #FFFFFF;
 }
 
-.number-buttons .btn {
+#backspace, #sign-button {
+  padding: 5px 0px 5px 0px;
+}
+
+.number-buttons .number-button {
   background: #1A6894;
 }
 
-
-
-.operator-button {
+.operator-button, #sign-button, #backspace{
   background: #7EA7DA;
+  color: #FFFFFF;
+}
+
+.operator-button:focus,
+#sign-button:focus, #backspace:focus {
+  background: #2CB0DE;
   color: #FFFFFF;
 }
 
