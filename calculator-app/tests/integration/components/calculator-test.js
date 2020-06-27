@@ -90,6 +90,35 @@ module('Integration | Component | calculator', function(hooks) {
     assert.equal(this.element.querySelector('.display').textContent.trim(), '4', 'Operation 3.5+.5 should display 4');
   });
 
+  test('it executes multiple operations and displays the result when an operator button is pressed', async function(assert){
+    await render(hbs`<Calculator />`);
+    await clickNumber('450.5');
+    await click('#sum-button');
+    await clickNumber('534.56');
+    await click('#multiply-button');
+    await clickNumber('418.365');
+    await click('#division-button');
+    await click('#button-3');
+    await click('#sum-button'); 
+
+    assert.equal(this.element.querySelector('.display').textContent.trim(), '137371.5423', 'When operation ((450.5+534.56)*418.365)/3 and the sum button is pressed, it should display the result');
+  });
+
+  test('it executes multiple operations and limit the result to 10 decimals', async function(assert){
+    await render(hbs`<Calculator />`);
+    await clickNumber('450.64345659');
+    await click('#multiply-button');
+    await clickNumber('3.435546943');
+    await click('#sum-button');
+    await clickNumber('99')
+    await click('#division-button');
+    await clickNumber('3');
+    await click('#subtract-button');
+    await clickNumber('50');
+    await click('#equal-button');
+    assert.equal(this.element.querySelector('.display').textContent.trim(), '499.0689165569', 'Should display 499.0689165569 as the result when operation (((450.64345659*3.435546943)+99)/3)-50 is executed');
+  });
+
   test('it gets an error when a division by zero is executed, then screen is cleared when any button is pressed', async function(assert){
     await render(hbs`<Calculator />`);
     await clickNumber('85');
@@ -102,7 +131,11 @@ module('Integration | Component | calculator', function(hooks) {
 
   async function clickNumber(number){
     for(let index=0; index<number.length; index++){
-      await click(`#button-${number.charAt(index)}`);
+      if(number.charAt(index) === '.'){
+        await click(`#decimal-point`);
+      } else {
+        await click(`#button-${number.charAt(index)}`);
+      }
     }
   }
 

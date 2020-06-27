@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 export default class OperationSolverService extends Service {
   @tracked result = Number(0);
   @tracked operator = "";
+  DECIMAL_MULTIPLIER = 1e10; //Used to set the maximum number of decimals to 10
 
   operations = {
     "+": this.sum,
@@ -20,7 +21,7 @@ export default class OperationSolverService extends Service {
 
   calculate(currentValue, operator){
     try {
-      this.result = this.operations[this.operator](this.result, Number(currentValue));
+      this.result = Math.round(this.operations[this.operator](this.result, Number(currentValue)) * this.DECIMAL_MULTIPLIER)/this.DECIMAL_MULTIPLIER;
     } catch(e){
       return e.message;
     }
@@ -56,7 +57,7 @@ export default class OperationSolverService extends Service {
     }
 
     try{
-      const operationResult = this.operations[this.operator](this.result, Number(currentValue));
+      const operationResult = Math.round(this.operations[this.operator](this.result, Number(currentValue)) * this.DECIMAL_MULTIPLIER)/this.DECIMAL_MULTIPLIER;
       this.cleanOperation();
       return operationResult.toString();
     } catch(e) {
