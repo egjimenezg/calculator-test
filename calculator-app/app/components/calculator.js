@@ -90,6 +90,11 @@ export default class CalculatorComponent extends Component {
   }
 
   @action
+  changeSign(){
+    this.displayText = (Number(this.displayText)*-1).toString();
+  }
+
+  @action
   getResult(){
     if(this.hasErrors()){
       this.clear();

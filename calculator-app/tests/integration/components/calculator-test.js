@@ -55,6 +55,16 @@ module('Integration | Component | calculator', function(hooks) {
     assert.equal(this.element.querySelector('.display').textContent.trim(), '5', '50 divided by 10 will display 5');
   });
 
+  test('it should change the sign when the sign button is pressed', async function(assert){
+    await render(hbs`<Calculator />`);
+    await clickNumber('600');
+    await click('#sign-button');
+    await click('#sum-button');
+    await clickNumber('400');
+    await click('#equal-button');
+    assert.equal(this.element.querySelector('.display').textContent.trim(),'-200', 'When the operation -600 + 400 is executed should display -200')
+  });
+
   test('it shows the result of consecutive operations when equal button is pressed', async function(assert){
     await render(hbs`<Calculator />`);
     await clickNumber('35');
@@ -63,7 +73,6 @@ module('Integration | Component | calculator', function(hooks) {
     await click('#multiply-button');
     await clickNumber('2');
     await click('#equal-button');
-
     assert.equal(this.element.querySelector('.display').textContent.trim(), '90', 'Operation (35+10)*2 should display 90');
   });
 
@@ -99,8 +108,7 @@ module('Integration | Component | calculator', function(hooks) {
     await clickNumber('418.365');
     await click('#division-button');
     await click('#button-3');
-    await click('#sum-button'); 
-
+    await click('#sum-button');
     assert.equal(this.element.querySelector('.display').textContent.trim(), '137371.5423', 'When operation ((450.5+534.56)*418.365)/3 and the sum button is pressed, it should display the result');
   });
 
@@ -125,7 +133,6 @@ module('Integration | Component | calculator', function(hooks) {
     await click('#division-button');
     await clickNumber('0');
     await click('#equal-button');
-
     assert.equal(this.element.querySelector('.display').textContent.trim(), 'Error: Division by 0', 'Should display an error when a division by zero is executed');
   });
 
