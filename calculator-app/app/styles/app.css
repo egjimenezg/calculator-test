@@ -4,6 +4,13 @@
   min-height: 250px;
 }
 
+/**** DISPLAY ****/
+.display {
+  float: right;
+  direction: ltr;
+  padding-left: 10px;
+}
+
 .display-container {
   padding: 10px;
   border: solid 1px;
@@ -11,10 +18,23 @@
   background: #8ED1F7;
   border: none;
   text-align: right;
-  overflow: scroll;
+  overflow-x: scroll;
+  direction: rtl;
   margin: 10px; 
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background: rgba(91,113,183,0.5);
+}
+
+/**** BUTTONS ****/
 .buttons {
   margin-bottom: 20px;
 }
@@ -27,7 +47,6 @@
   padding-left: 0px;
 }
 
-/**** BUTTONS ****/
 .buttons .btn {
   width: 40px;
   height: 40px;
