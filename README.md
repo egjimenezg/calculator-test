@@ -1,37 +1,53 @@
 # Calculator Test
 
+# Prerequisites
+* git
+* [nvm](https://github.com/nvm-sh/nvm) or Node.js v12.18
+
 ## Running
 
-The project was developed using Node 12.18
+**1. Install node 12.18.0 using [nvm](https://github.com/nvm-sh/nvm):**
 
-* Install node using [nvm](https://github.com/nvm-sh/nvm). 
 * `nvm install 12.18.0`
 
-Install npm dependencies and run a server
-* `cd calculator-app`
+**2. Clone the repository:**
+
+`git clone https://github.com/egjimenezg/calculator-test`
+
+`cd calculator-test/calculator-app`
+
+**3. Install npm dependencies and run ember serve:**
+
 * `npm install`
 * `ember serve`
 
-* Visit the app at **`http://localhost:4200`**
-* Visit the tests at **`http://localhost:4200/tests`** or run them at **`http://localhost:4200/tests?devmode`**
+**4. Visit the app at:**
+
+- **`http://localhost:4200`**
+
+You can run the tests at
+
+**`http://localhost:4200/tests`** or  **`http://localhost:4200/tests?devmode`**
 
 ### Building
 
+If you want to generate the deployment files and run in a web server use the following command:
+
 * `ember build --environment production` (production)
 
-This will generate the deployment files in the dist folder.
+It will generate the deployment files in the dist folder.
 
 ## Run using docker
 
-Build the image
+**1. Build the image**
 
 `docker build -t egjimenezg/calculator-test .` 
 
-Run docker container from image specifying the port
+**2. Run docker container from image specifying the port**
 
 `docker run -p <PORT>:4200 -d egjimenezg/calculator-test` 
 
-* Visit the app at **`http://localhost:<PORT>`**
-* Visit the tests at **`http://localhost:<PORT>/tests`**
+**3. Visit the app at `http://localhost:<PORT>`**
 
+Or Visit the tests at **`http://localhost:<PORT>/tests`**
 

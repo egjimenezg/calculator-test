@@ -12,4 +12,4 @@ RUN npm install -g ember-cli@3.18.0
 
 EXPOSE 4200
 
-CMD ["ember","server"]
+ENTRYPOINT ["ember","serve"]
