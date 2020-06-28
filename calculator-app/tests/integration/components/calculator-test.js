@@ -94,7 +94,6 @@ module('Integration | Component | calculator', function(hooks) {
     assert.equal(this.element.querySelector('.display').textContent.trim(), '90', 'Operation (35+10)*2 should display 90');
   });
 
-
   test('it clears the screen when the erase button is pressed', async function(assert){
     await render(hbs`<Calculator />`);
     await clickNumber('90');
@@ -144,7 +143,6 @@ module('Integration | Component | calculator', function(hooks) {
     assert.equal(this.element.querySelector('.display').textContent.trim(), '499.0689165569', 'Should display 499.0689165569 as the result when operation (((450.64345659*3.435546943)+99)/3)-50 is executed');
   });
 
-
   test('should execute an operation using all operartors', async function(assert){
     await render(hbs`<Calculator />`);
     await clickNumber('5000000');
@@ -157,8 +155,22 @@ module('Integration | Component | calculator', function(hooks) {
     await clickNumber('400');
     await click('#backspace');
     await click('#equal-button');
-
     assert.equal(this.element.querySelector('.display').textContent.trim(),'-3124875','((5000000-200)*-25)/40');
+  });
+  
+  test('should display a number with a precision of 15 if number is greater than MAX_SAFE_INTER or less than MIN_SAFE_INTEGER', async function(assert){
+    await render(hbs`<Calculator />`);
+    await clickNumber('10000000000000000');
+    await click('#multiply-button');
+    await clickNumber('10000000000000000');
+    await click('#equal-button');
+    assert.equal(this.element.querySelector('.display').textContent.trim(),'1.00000000000000e+32','');
+    await clickNumber('10000000000000000');
+    await click('#sign-button');
+    await click('#multiply-button');
+    await clickNumber('10000000000000000');
+    await click('#equal-button');
+    assert.equal(this.element.querySelector('.display').textContent.trim(),'-1.00000000000000e+32','');
   });
 
   test('it gets an error when a division by zero is executed, then screen is cleared when any button is pressed', async function(assert){

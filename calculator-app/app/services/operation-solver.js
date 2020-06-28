@@ -21,13 +21,13 @@ export default class OperationSolverService extends Service {
 
   calculateAndSetNewOperator(currentValue, operator){
     try {
-      this.result = Math.round(this.operations[this.operator](this.result, Number(currentValue)) * this.DECIMAL_MULTIPLIER)/this.DECIMAL_MULTIPLIER;
+      this.result = this.executeOperation(this.result, currentValue)
     } catch(e){
       return e.message;
     }
 
     this.operator = operator;
-    return this.result.toString() 
+    return this.setResultLimits(this.result);
   }
 
   sum(left, right){
@@ -46,23 +46,27 @@ export default class OperationSolverService extends Service {
     if(right === Number("0")){
       throw new Error("Error: Division by 0");
     }
-    
+
     return left/right; 
   }
 
   getResult(currentValue){
     if(isEmpty(this.operator)){
       this.result = Number(currentValue);
-      return currentValue; 
+      return this.setResultLimits(this.result); 
     }
 
     try{
-      const operationResult = Math.round(this.operations[this.operator](this.result, Number(currentValue)) * this.DECIMAL_MULTIPLIER)/this.DECIMAL_MULTIPLIER;
+      const operationResult = this.executeOperation(this.result, currentValue);
       this.cleanOperation();
-      return operationResult.toString();
+      return this.setResultLimits(operationResult);
     } catch(e) {
       return e.message;
     }
+  }
+
+  executeOperation(left, right){
+    return Math.round(this.operations[this.operator](left, Number(right)) * this.DECIMAL_MULTIPLIER)/this.DECIMAL_MULTIPLIER;
   }
 
   cleanOperation(){
@@ -81,6 +85,13 @@ export default class OperationSolverService extends Service {
 
   isOperatorValid(operator){
     return Object.keys(this.operations).includes(operator);
+  }
+
+  setResultLimits(result){
+    if(result > Number.MAX_SAFE_INTEGER || result < Number.MIN_SAFE_INTEGER)
+      return result.toPrecision(15);
+
+    return result.toString();
   }
 
 }
