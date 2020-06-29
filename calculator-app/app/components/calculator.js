@@ -115,7 +115,7 @@ export default class CalculatorComponent extends Component {
       return;
     }
 
-    if(this.displayText.length === 1 || (this.displayText.length === 2 && this.displayText.charAt(0) === "-")){
+    if(this.isOnlyItemOnScreen()){
       this.displayText = "0";
       return;
     }
@@ -176,6 +176,10 @@ export default class CalculatorComponent extends Component {
 
   canScreenBeOverwritten(){
     return this.displayText === "0" || this.operatorPressed || this.equalPressed;
+  }
+
+  isOnlyItemOnScreen(){
+    return this.displayText.length === 1 || (this.displayText.length === 2 && this.displayText.charAt(0) === "-");
   }
 
   hasErrors(){

@@ -31,7 +31,9 @@ You can run the tests at
 
 ### Building
 
-If you want to generate the deployment files and run in a web server use the following command:
+If you want to generate the deployment files and run the project in a web server use the following command:
+
+`cd calculator-test/calculator-app`
 
 * `ember build --environment production` (production)
 
@@ -50,5 +52,5 @@ the local port on which the application will run.**
 
 **3. Visit the app at `http://localhost:<PORT>`**
 
-Or Visit the tests at **`http://localhost:<PORT>/tests`**
+Or visit the tests at **`http://localhost:<PORT>/tests`**
 
