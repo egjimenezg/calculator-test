@@ -145,6 +145,7 @@ export default class CalculatorComponent extends Component {
   clear(){
     this.displayText = "0";
     this.isRightOperand = false;
+    this.equalPressed = false;
     this.operatorPressed = false;
     this.operationSolver.cleanOperation();
   }

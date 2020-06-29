@@ -39,13 +39,14 @@ It will generate the deployment files in the dist folder.
 
 ## Run using docker
 
-**1. Build the image**
+**1. Build the image:**
 
-`docker build -t egjimenezg/calculator-test .` 
+`docker build -t egjimenezg/calculator_test .` 
 
-**2. Run docker container from image specifying the port**
+**2. Run docker container from created image or image hosted in docker hub specifying 
+the local port on which the application will run.**
 
-`docker run -p <PORT>:4200 -d egjimenezg/calculator-test` 
+`docker run -p <PORT>:4200 -d egjimenezg/calculator_test` 
 
 **3. Visit the app at `http://localhost:<PORT>`**
 

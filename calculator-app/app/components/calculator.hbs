@@ -16,11 +16,11 @@
       
       {{!-- BEGIN BUTTONS SECTION --}}
       <div class="buttons row">
-        <div class="number-buttons col-6 col-sm-8 col-md-8 col-lg-8">
+        <div class="number-buttons col-8 col-sm-8 col-md-8 col-lg-8">
           {{#each this.numberMatrix as |numberRow|}}
             <div class="row buttons-row">
               {{#each numberRow as |numberButton|}}
-                <div class="col text-center">
+                <div class="col">
                   <button type="button"
                           id="button-{{numberButton}}"
                           class="btn btn-primary number-button"
@@ -32,35 +32,35 @@
             </div>
           {{/each}}
           <div class="row buttons-row">
-            <div class="col-4 text-center">
+            <div class="col-4">
               <button type="button" id="button-0" class="btn btn-primary number-button"
                       {{on "click" (fn this.addNumberOrDotToDisplay '0')}}>0</button>
             </div>
-            <div class="col-4 text-center">
+            <div class="col-4">
               <button type="button" id="decimal-point" class="btn btn-primary number-button"
                       {{on "click" (fn this.addNumberOrDotToDisplay '.')}}>.</button>
             </div> 
           </div>
         </div>
 
-        <div class="operation-buttons col-6 col-sm-4 col-md-4 col-lg-4">
+        <div class="operation-buttons col-4 col-sm-4 col-md-4 col-lg-4">
           <div class="row buttons-row">
-            <div class="col text-center">
+            <div class="col text-left">
               <button type="button" id="multiply-button" class="btn operator-button"
                       {{on "click" (fn this.executeOperation "*")}}>x</button>
             </div>
-            <div class="col text-center">
+            <div class="col text-right">
               <button type="button" id="division-button" class="btn operator-button"
                       {{on "click" (fn this.executeOperation "/")}}>÷</button>
             </div>
           </div>
           
           <div class="row buttons-row">
-            <div class="col text-center">
+            <div class="col text-left">
               <button type="button" id="sum-button" class="btn operator-button"
                       {{on "click" (fn this.executeOperation "+")}}>+</button>
             </div>
-            <div class="col text-center">
+            <div class="col text-right">
               <button type="button" id="subtract-button" class="btn operator-button"
                       {{on "click" (fn this.executeOperation "-")}}>
                 -
@@ -69,10 +69,10 @@
           </div>
 
           <div class="row buttons-row">
-            <div class="col text-center">
+            <div class="col text-left">
               <button type="button" id="sign-button" class="btn" {{on "click" this.changeSign}}>+/-</button>
             </div>
-            <div class="col text-center">
+            <div class="col text-right">
               <button type="button" id="backspace" class="btn text-center" {{on "click" this.removeLastNumberPressed}}>
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-backspace" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M6.603 2h7.08a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-7.08a1 1 0 0 1-.76-.35L1 8l4.844-5.65A1 1 0 0 1 6.603 2zm7.08-1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1h7.08z"/>
@@ -84,12 +84,12 @@
           </div>
 
           <div class="row buttons-row">
-            <div class="col text-center">
+            <div class="col text-left">
               <button type="button" id="equal-button" class="btn" {{on "click" this.getResult}}>
                 =
               </button>
             </div>
-            <div class="col text-center">
+            <div class="col text-right">
               <button type="button" id="clear-button" class="btn" {{on "click" this.clear}}>
                 C
               </button>

@@ -1,6 +1,6 @@
 #calculator {
   margin-top: 30px;
-  background: #293A48;
+  background: #232f3e;
   min-height: 250px;
 }
 
@@ -12,7 +12,7 @@
 }
 
 .display-container {
-  padding: 10px;
+  padding: 5px 10px 0px 0px;
   border: solid 1px;
   font-size: 20px;
   background: #8ED1F7;
@@ -56,6 +56,10 @@
   background-color: #0062cc;
   color: #fff;
   border-color: #005cbf;
+}
+
+#equal-button:focus, #clear-button:focus {
+  background: #F03F15;
 }
 
 #equal-button, #clear-button {
